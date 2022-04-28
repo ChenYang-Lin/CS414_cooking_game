@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "744690924413",
+    "project_id": "cookinggame-1d157",
+    "storage_bucket": "cookinggame-1d157.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744690924413:android:8487244f9e3b45dde4aa14",
+        "android_client_info": {
+          "package_name": "com.example.cooking_game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744690924413-o2fgm3e29c14cbqm43mi81ks2r13qded.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cooking_game",
+            "certificate_hash": "5e33c779f5664991cf38d1882708f13a6580ac1b"
+          }
+        },
+        {
+          "client_id": "744690924413-gjtfta3p0hos092iaht48326c57fo3h1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCioboANWhyqW6T4n-iuwNi_a449EoYDw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "744690924413-gjtfta3p0hos092iaht48326c57fo3h1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
