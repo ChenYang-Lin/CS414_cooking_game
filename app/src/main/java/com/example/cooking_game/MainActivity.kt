@@ -4,9 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.bumptech.glide.Glide
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,6 +30,9 @@ class MainActivity : AppCompatActivity() {
     lateinit private var spoonacularAPI: SpoonacularService
 
     private var list = ArrayList<String>()
+
+    lateinit var USER: UserData
+    lateinit var user_id: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,11 +61,16 @@ class MainActivity : AppCompatActivity() {
         } else {
             user_name.text = currentUser.displayName
             user_email.text = currentUser.email
+            //currentUser.uid
             Glide.with(this)
                 .load(currentUser.photoUrl)
                 .placeholder(R.drawable.ic_baseline_person_24)
                 .circleCrop()
                 .into(user_image)
+            user_id = currentUser.uid
+
+            initUserData(currentUser.uid);
+//            renderUserProfile(currentUser.uid)
         }
 
 //        testRecipeAPI();
@@ -73,6 +84,19 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
         // Make sure to call finish(), otherwise the user would be able to go back to the MainActivity
         finish()
+    }
+
+    fun logout(view: View) {
+        AuthUI.getInstance().signOut(this)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // After logout, start the RegisterActivity again
+                    startRegisterActivity()
+                }
+                else {
+                    Log.e(TAG, "Task is not successful:${task.exception}")
+                }
+            }
     }
 
     fun testRecipeAPI() {
@@ -101,6 +125,70 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "onFailure: $t")
             }
         })
+    }
+
+    fun addone(view: View) {
+        fireBaseDb.collection("users").document(user_id).get()
+        .addOnSuccessListener { document ->
+            val updatedUser = mapOf(
+                "balance" to 101
+            )
+            document.reference.update(updatedUser)
+        }
+        .addOnFailureListener {
+            Log.d(TAG, "Update Failed")
+        }
+    }
+
+    private fun initUserData(userID: String) {
+        if (userID == null || userID.isEmpty()) {
+            startRegisterActivity()
+        }
+        // initilize first time user data
+        fireBaseDb.collection("users").document(userID).get()
+        .addOnSuccessListener { document ->
+            if (!document.exists()) {
+                Log.d(TAG, "Current data: null")
+                // If first time user, initialize user data
+                val users = fireBaseDb.collection("users")
+//                val user = hashMapOf(
+//                    "balance" to 100,
+//                    "ingredientInventory" to ArrayList<IngredientElement>(),
+//                    "foodInventory" to ArrayList<FoodElement>(),
+//                )
+                val user = UserData(
+                    100,
+                    null,
+                    null,
+                )
+                users.document(userID).set(user)
+            }
+        }
+        .addOnCompleteListener {
+            renderUserProfile(userID)
+        }
+        .addOnFailureListener {
+            Log.d(TAG, "Error getting documents")
+        }
+    }
+
+    private fun renderUserProfile(userID: String) {
+        if (userID == null || userID.isEmpty()) {
+            startRegisterActivity()
+        }
+        // initilize first time user data
+        fireBaseDb.collection("users").document(userID).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val userData = document.toObject<UserData>()
+                    user_balance.text = userData?.balance.toString()
+                } else {
+                    Log.d(TAG, "user data: null")
+                }
+            }
+            .addOnFailureListener {
+                Log.d(TAG, "Error getting documents")
+            }
     }
 
     fun firebaseReadAll() {

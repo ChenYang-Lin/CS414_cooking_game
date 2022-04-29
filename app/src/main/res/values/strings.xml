@@ -4,4 +4,11 @@
     <string name="register_btn_text">LOGIN/REGISTER</string>
     <string name="register_icon_description">register_game_icon</string>
     <string name="splash_icon_description">splash_icon</string>
+    <string name="user_name_label_text">Name: </string>
+    <string name="user_email_label_text">Email: </string>
+    <string name="balance_label_text">Balance: </string>
+    <string name="default_balance">0</string>
+    <string name="default_email">example@gamil.com</string>
+    <string name="default_name">John Doe</string>
+    <string name="logout_btn_text">LOGOUT</string>
 </resources>
