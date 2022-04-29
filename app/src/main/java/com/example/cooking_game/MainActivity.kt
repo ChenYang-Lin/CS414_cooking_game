@@ -1,9 +1,13 @@
 package com.example.cooking_game
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,8 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Get a Cloud Firestore instance
-        fireBaseDb = FirebaseFirestore.getInstance()
+
 
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -38,9 +41,38 @@ class MainActivity : AppCompatActivity() {
 
         spoonacularAPI = retrofit.create(SpoonacularService::class.java)
 
+        // Get a Cloud Firestore instance
+        fireBaseDb = FirebaseFirestore.getInstance()
+
+        // #### Authentication using FirebaseAuth #####
+
+        // Get instance of the FirebaseAuth
+        val currentUser = FirebaseAuth.getInstance().currentUser
+
+        // If currentUser is null, open the RegisterActivity
+        if (currentUser == null) {
+            startRegisterActivity()
+        } else {
+            user_name.text = currentUser.displayName
+            user_email.text = currentUser.email
+            Glide.with(this)
+                .load(currentUser.photoUrl)
+                .placeholder(R.drawable.ic_baseline_person_24)
+                .circleCrop()
+                .into(user_image)
+        }
+
 //        testRecipeAPI();
 //        firebaseAdd();
 //        firebaseReadAll();
+    }
+
+    // An helper function to start our RegisterActivity
+    private fun startRegisterActivity() {
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
+        // Make sure to call finish(), otherwise the user would be able to go back to the MainActivity
+        finish()
     }
 
     fun testRecipeAPI() {

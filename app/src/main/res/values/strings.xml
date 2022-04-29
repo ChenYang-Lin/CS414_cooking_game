@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">cooking_game</string>
+    <string name="game_name_text">Cooking Game</string>
+    <string name="register_btn_text">LOGIN/REGISTER</string>
+    <string name="register_icon_description">register_game_icon</string>
+    <string name="splash_icon_description">splash_icon</string>
 </resources>

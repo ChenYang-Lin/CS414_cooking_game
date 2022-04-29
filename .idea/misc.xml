@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/2022_Spring_CCSU/CS414/FinalProject/cooking_game/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/2022_Spring_CCSU/CS414/FinalProject/cooking_game/app/src/main/res/layout/activity_splash.xml" value="0.13541666666666666" />
+        <entry key="..\:/2022_Spring_CCSU/CS414/FinalProject/cooking_game/app/src/main/res/drawable/ic_baseline_fastfood_24_red.xml" value="0.2985" />
+        <entry key="..\:/2022_Spring_CCSU/CS414/FinalProject/cooking_game/app/src/main/res/drawable/ic_baseline_fastfood_24_white.xml" value="0.2985" />
+        <entry key="..\:/2022_Spring_CCSU/CS414/FinalProject/cooking_game/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.193" />
+        <entry key="..\:/2022_Spring_CCSU/CS414/FinalProject/cooking_game/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/2022_Spring_CCSU/CS414/FinalProject/cooking_game/app/src/main/res/layout/activity_register.xml" value="0.31979166666666664" />
+        <entry key="..\:/2022_Spring_CCSU/CS414/FinalProject/cooking_game/app/src/main/res/layout/activity_register_acticity.xml" value="0.358695652173913" />
+        <entry key="..\:/2022_Spring_CCSU/CS414/FinalProject/cooking_game/app/src/main/res/layout/activity_splash.xml" value="0.22" />
       </map>
     </option>
   </component>
