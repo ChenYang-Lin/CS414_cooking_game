@@ -12,7 +12,22 @@ data class RecipesData (
 
 data class Ingredient(
     val id: Int,
-    val amount: Float,
+//    val amount: Float,
     val name: String,
     val image: String,
+)
+
+data class IngredientResponse(
+    val results: List<Ingredient>
+)
+
+data class IngredientDetail(
+    val id: Int,
+    val name: String,
+    val estimatedCost: Cost,
+    val image: String,
+)
+
+data class Cost(
+    val value: Float
 )

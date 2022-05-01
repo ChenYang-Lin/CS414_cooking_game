@@ -1,5 +1,6 @@
 package com.example.cooking_game
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,9 +19,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
-    private val BASE_URL = "https://api.spoonacular.com/recipes/"
+    private val BASE_URL = "https://api.spoonacular.com/"
     private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
     private val TAG = "MainActivity"
+    private val REQUEST_CODE = 0
 
     private lateinit var fireBaseDb: FirebaseFirestore
 
@@ -97,6 +99,21 @@ class MainActivity : AppCompatActivity() {
                     Log.e(TAG, "Task is not successful:${task.exception}")
                 }
             }
+    }
+
+    fun openShop(view: View) {
+        val intent = Intent(this, ShopActivity::class.java)
+
+//        intent.putExtra("balance", balance)
+        startActivityForResult(intent, REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            // update data
+        }
     }
 
     fun testRecipeAPI() {

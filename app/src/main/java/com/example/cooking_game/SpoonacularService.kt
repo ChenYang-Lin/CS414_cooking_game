@@ -7,8 +7,19 @@ import retrofit2.http.Query
 
 interface SpoonacularService {
 
-    @GET("./findByIngredients")
+    @GET("./recipes/findByIngredients")
     fun getRecipeList(
         @Query("apiKey") apiKey: String,
         @Query("ingredients") ingredients: ArrayList<String>) : Call<List<RecipesData>>
+
+    @GET("./food/ingredients/search")
+    fun getAllIngredients(
+        @Query("apiKey") apiKey: String,
+        @Query("query") query: String) : Call<IngredientResponse>
+
+    @GET(".")
+    fun getIngredientDetail(
+        @Query("apiKey") apiKey: String,
+        @Query("amount") amount: String) : Call<IngredientDetail>
+
 }

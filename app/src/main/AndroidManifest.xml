@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cooking_game">
         <activity
+            android:name=".ShopCheckoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShopActivity"
+            android:exported="false" />
+        <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
