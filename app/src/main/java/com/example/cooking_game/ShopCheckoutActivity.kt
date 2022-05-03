@@ -1,11 +1,14 @@
 package com.example.cooking_game
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import kotlinx.android.synthetic.main.activity_shop_checkout.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,7 +23,11 @@ class ShopCheckoutActivity : AppCompatActivity() {
 
     private lateinit var fireBaseDb: FirebaseFirestore
     lateinit private var retrofit: Retrofit
-    lateinit private var  spoonacularAPI: SpoonacularService
+    lateinit private var spoonacularAPI: SpoonacularService
+
+    lateinit private var ingredientID: String
+    lateinit private var userID: String
+
 
     private var quantity = 1
     private var total: Float = 0.0F
@@ -30,10 +37,20 @@ class ShopCheckoutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_checkout)
 
-        val id = intent.getStringExtra("id") // id of selected ingredient from shop activity
+        Log.d(TAG, "Create Activity: ShopCheckoutActivity ")
+
+        ingredientID = intent.getStringExtra("id").toString() // id of selected ingredient from shop activity
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        // If currentUser is null, open the RegisterActivity
+        if (currentUser == null) {
+            startRegisterActivity()
+        } else {
+            userID = currentUser.uid.toString()
+        }
 
         retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL + "food/ingredients/" + id +"/information/")
+            .baseUrl(BASE_URL + "food/ingredients/" + ingredientID +"/information/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -66,7 +83,57 @@ class ShopCheckoutActivity : AppCompatActivity() {
         })
     }
 
+    private fun startRegisterActivity() {
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     fun checkout(view: View) {
+        val fireBaseDb = FirebaseFirestore.getInstance()
+        fireBaseDb.collection("users").document(userID).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    // users collection reference
+                    val users = fireBaseDb.collection("users")
+
+                    // get data for current user from firestore
+                    val userData = document.toObject<UserData>()
+                    // Log.d(TAG, "$userData")
+                    var balance = userData?.balance
+                    var ingredientInventory = userData?.ingredientInventory ?: HashMap<String, Int>()
+                    var foodInventory = userData?.foodInventory ?: HashMap<String, Int>()
+
+                    // if there is no balance, something wrong, exit
+                    if (balance == null) {
+                        return@addOnSuccessListener
+                    }
+
+                    if (balance >= total) {
+                        // new balance
+                        balance -= total
+
+                        // new quantity for current ingredient
+                        val hold = ingredientInventory[ingredientID] ?: 0
+                        ingredientInventory[ingredientID] = quantity + hold
+
+                        // update user date
+                        val user = UserData(
+                            balance,
+                            ingredientInventory,
+                            foodInventory,
+                        )
+                        users.document(userID).set(user)
+                    }
+                // user does not exist
+                } else {
+                    Log.d(TAG, "user data: null")
+                    startRegisterActivity()
+                }
+            }
+            .addOnFailureListener {
+                Log.d(TAG, "Error getting documents")
+            }
         finish()
     }
 
@@ -82,7 +149,7 @@ class ShopCheckoutActivity : AppCompatActivity() {
 
     private fun updateQuantity(num: Int) {
         quantity += num
-        total += num * unitPrice
+        total = quantity * unitPrice
         checkout_quantity.text = quantity.toString()
         checkout_item_total.text = "$" + String.format("%.2f", total)
     }

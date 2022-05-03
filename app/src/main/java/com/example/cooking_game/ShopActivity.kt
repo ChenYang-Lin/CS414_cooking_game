@@ -24,13 +24,15 @@ class ShopActivity : AppCompatActivity() {
     private val TAG = "ShopActivity"
 
     private var ingredientList = ArrayList<Ingredient>()
-    private val adapter = MyIngredientRecyclerAdapter(ingredientList)
+    private var adapter: MyIngredientRecyclerAdapter? = null
     lateinit private var retrofit: Retrofit
     lateinit private var  spoonacularAPI: SpoonacularService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
+
+        adapter = MyIngredientRecyclerAdapter(ingredientList)
 
         shop_recycler_view.adapter = adapter
         shop_recycler_view.layoutManager = GridLayoutManager(this, 3)
@@ -49,8 +51,7 @@ class ShopActivity : AppCompatActivity() {
     }
 
     fun backToHome(view: View) {
-        val intent = Intent(this, MainActivity::class.java)
-        setResult(Activity.RESULT_OK, intent)
+//        val intent = Intent(this, MainActivity::class.java)
         finish()
     }
 
@@ -82,7 +83,7 @@ class ShopActivity : AppCompatActivity() {
 //                Log.d(TAG, "${body.results[0].id}")
 
                 ingredientList.addAll(body.results)
-                adapter.notifyDataSetChanged()
+                adapter?.notifyDataSetChanged()
             }
 
             override fun onFailure(call: Call<IngredientResponse>, t: Throwable) {

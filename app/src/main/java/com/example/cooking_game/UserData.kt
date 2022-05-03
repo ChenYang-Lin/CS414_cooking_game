@@ -1,19 +1,17 @@
 package com.example.cooking_game
 
+import com.google.firebase.firestore.DocumentReference
+import java.security.Key
+
+//data class UserData(
+//    val balance: Int? = null,
+//    val ingredientInventory: List<IngredientElement>? = null,
+//    val foodInventory: List<FoodElement>? = null,
+//)
 data class UserData(
-    val balance: Int? = null,
-    val ingredientInventory: List<IngredientElement>? = null,
-    val foodInventory: List <FoodElement>? = null,
-)
-
-data class IngredientElement(
-    val id: Int,
-    val quantity: Int,
-)
-
-data class FoodElement(
-    val id: Int,
-    val quantity: Int,
+    val balance: Float? = null,
+    val ingredientInventory: HashMap<String, Int>? = null,
+    val foodInventory: HashMap<String,Int>? = null,
 )
 
 

@@ -12,9 +12,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -22,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private val BASE_URL = "https://api.spoonacular.com/"
     private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
     private val TAG = "MainActivity"
-    private val REQUEST_CODE = 0
 
     private lateinit var fireBaseDb: FirebaseFirestore
 
@@ -34,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private var list = ArrayList<String>()
 
     lateinit var USER: UserData
-    lateinit var user_id: String
+    lateinit var userID: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,16 +65,24 @@ class MainActivity : AppCompatActivity() {
                 .placeholder(R.drawable.ic_baseline_person_24)
                 .circleCrop()
                 .into(user_image)
-            user_id = currentUser.uid
+            userID = currentUser.uid
 
             initUserData(currentUser.uid);
-//            renderUserProfile(currentUser.uid)
         }
-
-//        testRecipeAPI();
-//        firebaseAdd();
-//        firebaseReadAll();
     }
+
+    // get newest data from firestore
+    override fun onResume() {
+        super.onResume()
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser == null) {
+            startRegisterActivity()
+        } else {
+            renderUserProfile(currentUser.uid)
+        }
+    }
+
+
 
     // An helper function to start our RegisterActivity
     private fun startRegisterActivity() {
@@ -103,58 +107,12 @@ class MainActivity : AppCompatActivity() {
 
     fun openShop(view: View) {
         val intent = Intent(this, ShopActivity::class.java)
-
-//        intent.putExtra("balance", balance)
-        startActivityForResult(intent, REQUEST_CODE)
+        startActivity(intent)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK){
-            // update data
-        }
-    }
-
-    fun testRecipeAPI() {
-        list.add("apple")
-        list.add("flour")
-        list.add("sugar")
-        spoonacularAPI.getRecipeList(API_KEY, list).enqueue(object: Callback<List<RecipesData>> {
-            override fun onResponse(call: Call<List<RecipesData>>, response: Response<List<RecipesData>>) {
-                Log.d(TAG, "onResponse: $response")
-
-                val body = response.body()
-                if (body == null) {
-                    Log.d(TAG, "Valid response was nto received")
-                    return
-                }
-                Log.d(TAG, "${body[0].id}")
-                Log.d(TAG, "${body.get(0).title}")
-                Log.d(TAG, "${body.get(0).image}")
-
-                Log.d(TAG, "${body.get(1).id}")
-                Log.d(TAG, "${body.get(1).title}")
-                Log.d(TAG, "${body.get(1).image}")
-            }
-
-            override fun onFailure(call: Call<List<RecipesData>>, t: Throwable) {
-                Log.d(TAG, "onFailure: $t")
-            }
-        })
-    }
-
-    fun addone(view: View) {
-        fireBaseDb.collection("users").document(user_id).get()
-        .addOnSuccessListener { document ->
-            val updatedUser = mapOf(
-                "balance" to 101
-            )
-            document.reference.update(updatedUser)
-        }
-        .addOnFailureListener {
-            Log.d(TAG, "Update Failed")
-        }
+    fun openInventory(view: View) {
+        val intent = Intent(this, InventoryActivity::class.java)
+        startActivity(intent)
     }
 
     private fun initUserData(userID: String) {
@@ -168,15 +126,11 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "Current data: null")
                 // If first time user, initialize user data
                 val users = fireBaseDb.collection("users")
-//                val user = hashMapOf(
-//                    "balance" to 100,
-//                    "ingredientInventory" to ArrayList<IngredientElement>(),
-//                    "foodInventory" to ArrayList<FoodElement>(),
-//                )
+
                 val user = UserData(
-                    100,
-                    null,
-                    null,
+                    100f,
+                    HashMap<String, Int>(),
+                    HashMap<String, Int>(),
                 )
                 users.document(userID).set(user)
             }
@@ -193,12 +147,12 @@ class MainActivity : AppCompatActivity() {
         if (userID == null || userID.isEmpty()) {
             startRegisterActivity()
         }
-        // initilize first time user data
+        // update layout
         fireBaseDb.collection("users").document(userID).get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
                     val userData = document.toObject<UserData>()
-                    user_balance.text = userData?.balance.toString()
+                    user_balance.text = "$" + String.format("%.2f", userData?.balance)
                 } else {
                     Log.d(TAG, "user data: null")
                 }
@@ -208,48 +162,4 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun firebaseReadAll() {
-        Log.d(TAG, "Start Firebase")
-        // Get data using addOnSuccessListener
-        fireBaseDb.collection("contacts")
-            .orderBy("name")  // Here you can also use orderBy to sort the results based on a field such as id
-            //.orderBy("id", Query.Direction.DESCENDING)  // this would be used to orderBy in DESCENDING order
-            .get()
-            .addOnSuccessListener { documents ->
-                Log.d(TAG, "success Firebase")
-                Log.d(TAG, "${documents.size()}")
-
-                // The result (documents) contains all the records in db, each of them is a document
-                for (document in documents) {
-
-                    Log.d(TAG, "${document.id} => ${document.data}")
-
-                    Log.d(TAG, "contact:, ${document.get("name")}")
-                }
-
-                // show all the records as a string in a dialog
-            }
-            .addOnFailureListener {
-                Log.d(TAG, "Error getting documents")
-            }
-    }
-    fun firebaseAdd() {
-
-        // Get an instance of our collection
-        val contacts = fireBaseDb.collection("contacts")
-
-        // Map or Dictionary objects is used to represent your document
-        val contact = hashMapOf(
-            "name" to "Jacob",
-        )
-
-        // Get an auto generated id for a document that you want to insert
-        val documentId = contacts.document().id
-
-        // Add data
-        contacts.document(documentId).set(contact)
-
-
-
-    }
 }
