@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fireBaseDb: FirebaseFirestore
 
     private var recipeList = ArrayList<RecipesData>()
-//    private val adapter
     lateinit private var retrofit: Retrofit
     lateinit private var spoonacularAPI: SpoonacularService
 
@@ -112,6 +111,11 @@ class MainActivity : AppCompatActivity() {
 
     fun openInventory(view: View) {
         val intent = Intent(this, InventoryActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun openCook(view: View) {
+        val intent = Intent(this, CookActivity::class.java)
         startActivity(intent)
     }
 

@@ -9,10 +9,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_shop.view.*
 import kotlinx.android.synthetic.main.item.view.*
 
-class MyIngredientRecyclerAdapter(private val ingredients: ArrayList<Ingredient>): RecyclerView.Adapter<MyIngredientRecyclerAdapter.MyViewHolder>() {
+class MyInventoryRecyclerAdapter(private val ingredients: ArrayList<Ingredient>): RecyclerView.Adapter<MyInventoryRecyclerAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val id = itemView.findViewById<TextView>(R.id.item_id)
         val name = itemView.findViewById<TextView>(R.id.item_name)
@@ -41,7 +40,7 @@ class MyIngredientRecyclerAdapter(private val ingredients: ArrayList<Ingredient>
         val currentIngredient = ingredients[position]
         val context = holder.itemView.context
 
-        holder.id.text = currentIngredient.id.toString()
+        holder.id.text = currentIngredient.id
         holder.name.text = currentIngredient.name
         Glide.with(context)
             .load("https://spoonacular.com/cdn/ingredients_100x100/" + currentIngredient.image)
@@ -52,5 +51,7 @@ class MyIngredientRecyclerAdapter(private val ingredients: ArrayList<Ingredient>
     override fun getItemCount(): Int {
         return ingredients.size
     }
+
+
 
 }

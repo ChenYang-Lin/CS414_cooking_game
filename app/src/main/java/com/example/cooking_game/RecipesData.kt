@@ -1,7 +1,7 @@
 package com.example.cooking_game
 
 data class RecipesData (
-    val id: Int,
+    val id: String,
     val title: String,
     val image: String,
     val usedIngredientCount: Int,
@@ -11,7 +11,7 @@ data class RecipesData (
 )
 
 data class Ingredient(
-    val id: Int,
+    val id: String,
 //    val amount: Float,
     val name: String,
     val image: String,
@@ -22,7 +22,7 @@ data class IngredientResponse(
 )
 
 data class IngredientDetail(
-    val id: Int,
+    val id: String,
     val name: String,
     val estimatedCost: Cost,
     val image: String,
@@ -30,4 +30,14 @@ data class IngredientDetail(
 
 data class Cost(
     val value: Float
+)
+
+data class Recipe(
+    val id: String,
+    val title: String,
+    val image: String,
+)
+
+data class RecipeResponse(
+    val results: List<Recipe>
 )

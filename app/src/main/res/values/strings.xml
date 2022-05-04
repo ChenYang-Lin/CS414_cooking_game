@@ -32,4 +32,7 @@
     <string name="checkout_minus_btn_text">-</string>
     <string name="checkout_quantity_text">1</string>
     <string name="checkout_btn_text">Checkout</string>
+    <string name="Inventory_title_text">Inventory</string>
+    <string name="cook_title_text">Culinary</string>
+    <string name="cook_hint">pasta</string>
 </resources>

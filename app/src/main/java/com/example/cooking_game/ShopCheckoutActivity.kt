@@ -50,13 +50,13 @@ class ShopCheckoutActivity : AppCompatActivity() {
         }
 
         retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL + "food/ingredients/" + ingredientID +"/information/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         spoonacularAPI = retrofit.create(SpoonacularService::class.java)
 
-        spoonacularAPI.getIngredientDetail(API_KEY, "1").enqueue(object:
+        spoonacularAPI.getIngredientDetail(ingredientID, API_KEY, "1").enqueue(object:
             Callback<IngredientDetail> {
             override fun onResponse(call: Call<IngredientDetail>, response: Response<IngredientDetail>) {
                 Log.d(TAG, "onResponse: $response")
