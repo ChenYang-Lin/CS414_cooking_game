@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shop_title_text">Shop</string>
+    <string name="shop_back_btn_text">Back</string>
+    <string name="shop_search_btn_text">Search</string>
+    <string name="shop_hint">cheese</string>
+
+    <string name="checkout_item_name_default">Cheese</string>
+    <string name="checkout_item_item_icon_description">shop_checkout_item_icon</string>
+    <string name="checkout_item_total_text">$0</string>
+    <string name="checkout_item_total_label">Total:</string>
+    <string name="checkout_plus_btn_text">+</string>
+    <string name="checkout_minus_btn_text">-</string>
+    <string name="checkout_quantity_text">1</string>
+    <string name="checkout_btn_text">Checkout</string>
+</resources>

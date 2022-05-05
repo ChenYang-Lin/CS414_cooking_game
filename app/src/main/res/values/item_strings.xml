@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- item -->
+    <string name="item_id_label_text">id:</string>
+    <string name="default_item_id">10023324</string>
+    <string name="dollor_sign_text">$:</string>
+    <string name="default_item_price">0</string>
+    <string name="default_item_name">name</string>
+    <string name="item_img_description">item_img</string>
+
+    <!-- cook prepare item -->
+    <string name="cook_prepare_amount_text">0/0</string>
+    <string name="cook_prepare_amount_unit_text">unit</string>
+</resources>

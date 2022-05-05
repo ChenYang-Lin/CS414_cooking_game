@@ -1,4 +1,4 @@
-package com.example.cooking_game
+package com.example.cooking_game.cook
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,9 +9,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.cooking_game.R
+import com.example.cooking_game.Recipe
 import kotlinx.android.synthetic.main.item.view.*
 
-class MyInventoryRecyclerAdapter(private val ingredients: ArrayList<Ingredient>): RecyclerView.Adapter<MyInventoryRecyclerAdapter.MyViewHolder>() {
+class MyRecipeRecyclerAdapter(private val recipes: ArrayList<Recipe>): RecyclerView.Adapter<MyRecipeRecyclerAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val id = itemView.findViewById<TextView>(R.id.item_id)
         val name = itemView.findViewById<TextView>(R.id.item_name)
@@ -22,7 +24,7 @@ class MyInventoryRecyclerAdapter(private val ingredients: ArrayList<Ingredient>)
                 val selectedItem = adapterPosition
                 Toast.makeText(itemView.context, "You clicked on $selectedItem", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(itemView.context, ShopCheckoutActivity::class.java)
+                val intent = Intent(itemView.context, CookPrepareActivity::class.java)
                 intent.putExtra("id", itemView.item_id.text.toString()) // send id of current ingredient to checkout activity
                 itemView.context.startActivity(intent)
             }
@@ -37,21 +39,19 @@ class MyInventoryRecyclerAdapter(private val ingredients: ArrayList<Ingredient>)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentIngredient = ingredients[position]
+        val currentRecipe = recipes[position]
         val context = holder.itemView.context
 
-        holder.id.text = currentIngredient.id
-        holder.name.text = currentIngredient.name
+        holder.id.text = currentRecipe.id
+        holder.name.text = currentRecipe.title
         Glide.with(context)
-            .load("https://spoonacular.com/cdn/ingredients_100x100/" + currentIngredient.image)
+            .load(currentRecipe.image)
             .placeholder(R.drawable.ic_baseline_fastfood_24_gray)
             .into(holder.img)
     }
 
     override fun getItemCount(): Int {
-        return ingredients.size
+        return recipes.size
     }
-
-
-
 }
+

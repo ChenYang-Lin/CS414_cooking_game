@@ -14,25 +14,4 @@
     <string name="profile_icon_description">profile_icon</string>
     <string name="open_inventory_btn_text">Inventory</string>
     <string name="open_shop_btn_text">Shop</string>
-    <string name="item_img_description">item_img</string>
-    <string name="default_item_id">10023324</string>
-    <string name="default_item_name">name</string>
-    <string name="dollor_sign_text">$:</string>
-    <string name="default_item_price">0</string>
-    <string name="shop_title_text">Shop</string>
-    <string name="shop_back_btn_text">Back</string>
-    <string name="shop_search_btn_text">Search</string>
-    <string name="shop_hint">cheese</string>
-    <string name="item_id_label_text">id:</string>
-    <string name="checkout_item_name_default">Cheese</string>
-    <string name="checkout_item_item_icon_description">shop_checkout_item_icon</string>
-    <string name="checkout_item_total_text">$0</string>
-    <string name="checkout_item_total_label">Total:</string>
-    <string name="checkout_plus_btn_text">+</string>
-    <string name="checkout_minus_btn_text">-</string>
-    <string name="checkout_quantity_text">1</string>
-    <string name="checkout_btn_text">Checkout</string>
-    <string name="Inventory_title_text">Inventory</string>
-    <string name="cook_title_text">Culinary</string>
-    <string name="cook_hint">pasta</string>
 </resources>

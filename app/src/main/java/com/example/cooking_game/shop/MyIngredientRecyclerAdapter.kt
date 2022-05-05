@@ -1,4 +1,4 @@
-package com.example.cooking_game
+package com.example.cooking_game.shop
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,7 +9,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_shop.view.*
+import com.example.cooking_game.Ingredient
+import com.example.cooking_game.R
 import kotlinx.android.synthetic.main.item.view.*
 
 class MyIngredientRecyclerAdapter(private val ingredients: ArrayList<Ingredient>): RecyclerView.Adapter<MyIngredientRecyclerAdapter.MyViewHolder>() {

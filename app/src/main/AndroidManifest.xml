@@ -12,16 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cooking_game">
         <activity
-            android:name=".CookActivity"
+            android:name=".cook.CookPrepareActivity"
             android:exported="false" />
         <activity
-            android:name=".InventoryActivity"
+            android:name=".cook.CookActivity"
             android:exported="false" />
         <activity
-            android:name=".ShopCheckoutActivity"
+            android:name=".inventory.InventoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ShopActivity"
+            android:name=".shop.ShopCheckoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".shop.ShopActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cook_title_text">Culinary</string>
+    <string name="cook_hint">pasta</string>
+    <string name="cook_back_btn_text">Back</string>
+
+
+    <string name="cook_prepare_recipe_name_text">Pasta</string>
+    <string name="cook_prepare_item_icon_description">cook_prepare_item_icon</string>
+    <string name="required_ingredients_label_text">Required ingredients:</string>
+    <string name="ready_in_minutes_label_text">Ready in minutes:</string>
+    <string name="ready_in_minutes_text">0</string>
+    <string name="start_cooking_btn_text">Start Cooking!</string>
+</resources>

@@ -10,9 +10,14 @@ import java.security.Key
 //)
 data class UserData(
     val balance: Float? = null,
-    val ingredientInventory: HashMap<String, Int>? = null,
+    val ingredientInventory: HashMap<String, IngredientData>? = null,
     val foodInventory: HashMap<String,Int>? = null,
 )
 
+data class IngredientData(
+    val quantity: Int? = null,
+    val name: String? = null,
+    val image: String? = null
+)
 
 

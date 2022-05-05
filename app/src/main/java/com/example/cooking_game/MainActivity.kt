@@ -1,12 +1,14 @@
 package com.example.cooking_game
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.example.cooking_game.cook.CookActivity
+import com.example.cooking_game.inventory.InventoryActivity
+import com.example.cooking_game.shop.ShopActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,18 +19,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     private val BASE_URL = "https://api.spoonacular.com/"
-    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
+//    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
+    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
     private val TAG = "MainActivity"
+
 
     private lateinit var fireBaseDb: FirebaseFirestore
 
-    private var recipeList = ArrayList<RecipesData>()
     lateinit private var retrofit: Retrofit
     lateinit private var spoonacularAPI: SpoonacularService
 
-    private var list = ArrayList<String>()
-
-    lateinit var USER: UserData
     lateinit var userID: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
 
                 val user = UserData(
                     100f,
-                    HashMap<String, Int>(),
+                    HashMap<String, IngredientData>(),
                     HashMap<String, Int>(),
                 )
                 users.document(userID).set(user)

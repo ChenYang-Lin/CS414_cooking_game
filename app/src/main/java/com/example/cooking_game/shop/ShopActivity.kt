@@ -1,15 +1,13 @@
-package com.example.cooking_game
+package com.example.cooking_game.shop
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.cooking_game.*
 import kotlinx.android.synthetic.main.activity_shop.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,7 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ShopActivity : AppCompatActivity() {
     private val BASE_URL = "https://api.spoonacular.com/"
-    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
+//    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
+    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
     private val TAG = "ShopActivity"
 
     private var ingredientList = ArrayList<Ingredient>()

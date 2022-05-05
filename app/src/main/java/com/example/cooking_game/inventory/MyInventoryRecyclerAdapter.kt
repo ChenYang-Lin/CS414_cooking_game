@@ -1,4 +1,4 @@
-package com.example.cooking_game
+package com.example.cooking_game.inventory
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,9 +9,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.cooking_game.Ingredient
+import com.example.cooking_game.R
+import com.example.cooking_game.shop.ShopCheckoutActivity
 import kotlinx.android.synthetic.main.item.view.*
 
-class MyRecipeRecyclerAdapter(private val recipes: ArrayList<Recipe>): RecyclerView.Adapter<MyRecipeRecyclerAdapter.MyViewHolder>() {
+class MyInventoryRecyclerAdapter(private val ingredients: ArrayList<Ingredient>): RecyclerView.Adapter<MyInventoryRecyclerAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val id = itemView.findViewById<TextView>(R.id.item_id)
         val name = itemView.findViewById<TextView>(R.id.item_name)
@@ -37,18 +40,21 @@ class MyRecipeRecyclerAdapter(private val recipes: ArrayList<Recipe>): RecyclerV
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentRecipe = recipes[position]
+        val currentIngredient = ingredients[position]
         val context = holder.itemView.context
 
-        holder.id.text = currentRecipe.id
-        holder.name.text = currentRecipe.title
+        holder.id.text = currentIngredient.id
+        holder.name.text = currentIngredient.name
         Glide.with(context)
-            .load(currentRecipe.image)
+            .load(currentIngredient.image)
             .placeholder(R.drawable.ic_baseline_fastfood_24_gray)
             .into(holder.img)
     }
 
     override fun getItemCount(): Int {
-        return recipes.size
+        return ingredients.size
     }
+
+
+
 }

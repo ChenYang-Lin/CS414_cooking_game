@@ -1,4 +1,4 @@
-package com.example.cooking_game
+package com.example.cooking_game.shop
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.example.cooking_game.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
@@ -18,7 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ShopCheckoutActivity : AppCompatActivity() {
     private val BASE_URL = "https://api.spoonacular.com/"
-    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
+//    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
+    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
     private val TAG = "ShopCheckoutActivity"
 
     private lateinit var fireBaseDb: FirebaseFirestore
@@ -32,6 +34,8 @@ class ShopCheckoutActivity : AppCompatActivity() {
     private var quantity = 1
     private var total: Float = 0.0F
     private var unitPrice: Float = 0.0F
+    private var imageURL = ""
+    private var name = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +72,12 @@ class ShopCheckoutActivity : AppCompatActivity() {
                 }
                 unitPrice = body.estimatedCost.value / 100
                 total = unitPrice
+                imageURL = "https://spoonacular.com/cdn/ingredients_250x250/" + body.image
+                name = body.name
                 // render activity layout
-                checkout_item_name.text = body.name
+                checkout_item_name.text = name
                 Glide.with(applicationContext)
-                    .load("https://spoonacular.com/cdn/ingredients_250x250/" + body.image)
+                    .load(imageURL)
                     .placeholder(R.drawable.ic_baseline_fastfood_24_gray)
                     .into(checkout_item_icon)
                 checkout_item_total.text = "$" + String.format("%.2f", unitPrice)
@@ -101,7 +107,7 @@ class ShopCheckoutActivity : AppCompatActivity() {
                     val userData = document.toObject<UserData>()
                     // Log.d(TAG, "$userData")
                     var balance = userData?.balance
-                    var ingredientInventory = userData?.ingredientInventory ?: HashMap<String, Int>()
+                    var ingredientInventory = userData?.ingredientInventory ?: HashMap<String, IngredientData>()
                     var foodInventory = userData?.foodInventory ?: HashMap<String, Int>()
 
                     // if there is no balance, something wrong, exit
@@ -114,8 +120,13 @@ class ShopCheckoutActivity : AppCompatActivity() {
                         balance -= total
 
                         // new quantity for current ingredient
-                        val hold = ingredientInventory[ingredientID] ?: 0
-                        ingredientInventory[ingredientID] = quantity + hold
+                        val hold = ingredientInventory[ingredientID]?.quantity ?: 0
+//                        ingredientInventory[ingredientID] = quantity + hold
+                        ingredientInventory[ingredientID] = IngredientData(
+                            quantity + hold,
+                            name,
+                            imageURL,
+                        )
 
                         // update user date
                         val user = UserData(
