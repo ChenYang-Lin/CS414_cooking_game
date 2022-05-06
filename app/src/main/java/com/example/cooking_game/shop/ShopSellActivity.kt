@@ -83,6 +83,7 @@ class ShopSellActivity : AppCompatActivity() {
                         .load(imageURL)
                         .placeholder(R.drawable.ic_baseline_fastfood_24_gray)
                         .into(sell_item_icon)
+                    shop_sell_stock.text = stock.toString()
                     sell_item_total.text = "$" + String.format("%.2f", total)
 
                     // user does not exist

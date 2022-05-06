@@ -16,6 +16,8 @@
 
     <string name="sell_item_name_default">Cheese</string>
     <string name="sell_item_item_icon_description">shop_sell_item_icon</string>
+    <string name="sell_stock_label">Stock:</string>
+    <string name="sell_stock_text">0</string>
     <string name="sell_item_total_text">$0</string>
     <string name="sell_item_total_label">Sell for:</string>
     <string name="sell_plus_btn_text">+</string>
