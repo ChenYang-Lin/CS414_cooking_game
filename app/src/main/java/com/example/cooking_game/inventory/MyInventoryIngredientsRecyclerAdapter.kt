@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.cooking_game.Ingredient
 import com.example.cooking_game.R
 import com.example.cooking_game.shop.ShopCheckoutActivity
+import com.example.cooking_game.shop.ShopSellActivity
 import kotlinx.android.synthetic.main.item.view.*
 
 class MyInventoryIngredientsRecyclerAdapter(private val ingredients: ArrayList<Ingredient>): RecyclerView.Adapter<MyInventoryIngredientsRecyclerAdapter.MyViewHolder>() {
@@ -25,8 +26,9 @@ class MyInventoryIngredientsRecyclerAdapter(private val ingredients: ArrayList<I
                 val selectedItem = adapterPosition
                 Toast.makeText(itemView.context, "You clicked on $selectedItem", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(itemView.context, ShopCheckoutActivity::class.java)
-                intent.putExtra("id", itemView.item_id.text.toString()) // send id of current ingredient to checkout activity
+                val intent = Intent(itemView.context, ShopSellActivity::class.java)
+                intent.putExtra("id", itemView.item_id.text.toString()) // send id of current item
+                intent.putExtra("type", "ingredient") // type of item (ingredient in this case)
                 itemView.context.startActivity(intent)
             }
 

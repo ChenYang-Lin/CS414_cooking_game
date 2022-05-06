@@ -58,22 +58,30 @@ class InventoryActivity : AppCompatActivity() {
 
         spoonacularAPI = retrofit.create(SpoonacularService::class.java)
 
-        // clear list and replace with ingredients/food that user have
-        ingredientList.clear()
-        foodList.clear()
         getUserInventoryFromFireStore()
 
     }
+
     private fun startRegisterActivity() {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
         finish()
     }
 
+    // update data when user returned
+    override fun onResume() {
+        super.onResume()
+        getUserInventoryFromFireStore()
+    }
+
     private fun getUserInventoryFromFireStore() {
         fireBaseDb.collection("users").document(userID).get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
+                    // clear list and replace with ingredients/food that user have
+                    ingredientList.clear()
+                    foodList.clear()
+
                     // get data for current user from firestore
                     val userData = document.toObject<UserData>()
 
