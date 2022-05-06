@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:text="@string/checkout_item_name_default"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

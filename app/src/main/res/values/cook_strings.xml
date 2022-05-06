@@ -10,5 +10,7 @@
     <string name="required_ingredients_label_text">Required ingredients:</string>
     <string name="ready_in_minutes_label_text">Ready in minutes:</string>
     <string name="ready_in_minutes_text">0</string>
+    <string name="servings_label_text">Servings:</string>
+    <string name="servings_text">0</string>
     <string name="start_cooking_btn_text">Start Cooking!</string>
 </resources>

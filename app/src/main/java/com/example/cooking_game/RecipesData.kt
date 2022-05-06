@@ -43,9 +43,10 @@ data class RecipeDetail(
 )
 
 data class ExtendedIngredients(
-    val id: String,
-    val amount: Float,
-    val image: String,
-    val name: String,
-    val unit: String,
+    val id: String? = null,
+    val image: String? = null,
+    val name: String? = null,
+    var hold: Int = 0,
+    val amount: Float? = null,
+    val unit: String? = null,
 )

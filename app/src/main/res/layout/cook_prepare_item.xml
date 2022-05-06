@@ -71,20 +71,34 @@
         app:layout_constraintTop_toBottomOf="@+id/cook_prepare_item_name">
 
         <TextView
+            android:id="@+id/cook_prepare_hold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cook_prepare_hold_text"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/cook_prepare_divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cook_prepare_divider_text"
+            android:textAlignment="center" />
+
+        <TextView
             android:id="@+id/cook_prepare_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/cook_prepare_amount_text"
-            android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/cook_prepare_amount_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@string/cook_prepare_amount_unit_text"
-            android:textSize="18sp" />
+            android:text="@string/cook_prepare_amount_unit_text" />
 
     </LinearLayout>
 

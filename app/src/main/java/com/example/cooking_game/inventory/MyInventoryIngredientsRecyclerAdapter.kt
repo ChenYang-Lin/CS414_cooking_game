@@ -14,7 +14,7 @@ import com.example.cooking_game.R
 import com.example.cooking_game.shop.ShopCheckoutActivity
 import kotlinx.android.synthetic.main.item.view.*
 
-class MyInventoryRecyclerAdapter(private val ingredients: ArrayList<Ingredient>): RecyclerView.Adapter<MyInventoryRecyclerAdapter.MyViewHolder>() {
+class MyInventoryIngredientsRecyclerAdapter(private val ingredients: ArrayList<Ingredient>): RecyclerView.Adapter<MyInventoryIngredientsRecyclerAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val id = itemView.findViewById<TextView>(R.id.item_id)
         val name = itemView.findViewById<TextView>(R.id.item_name)

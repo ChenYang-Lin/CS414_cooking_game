@@ -19,8 +19,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     private val BASE_URL = "https://api.spoonacular.com/"
-//    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
-    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
+    // api keys from two accounts, just in case when free plan limitation reached
+    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
+//    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
     private val TAG = "MainActivity"
 
 
@@ -134,7 +135,7 @@ class MainActivity : AppCompatActivity() {
                 val user = UserData(
                     100f,
                     HashMap<String, IngredientData>(),
-                    HashMap<String, Int>(),
+                    HashMap<String, FoodData>(),
                 )
                 users.document(userID).set(user)
             }

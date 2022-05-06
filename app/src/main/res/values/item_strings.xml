@@ -9,6 +9,8 @@
     <string name="item_img_description">item_img</string>
 
     <!-- cook prepare item -->
-    <string name="cook_prepare_amount_text">0/0</string>
+    <string name="cook_prepare_hold_text">0</string>
+    <string name="cook_prepare_divider_text">/</string>
+    <string name="cook_prepare_amount_text">0</string>
     <string name="cook_prepare_amount_unit_text">unit</string>
 </resources>

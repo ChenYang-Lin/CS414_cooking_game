@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/cook_prepare_recipe_name_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +38,7 @@
         android:layout_height="150dp"
         android:layout_marginTop="4dp"
         android:contentDescription="@string/cook_prepare_item_icon_description"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cook_prepare_recipe_name"
@@ -52,7 +53,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/required_ingredients_label_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cook_prepare_image" />
@@ -64,9 +65,21 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:text="@string/ready_in_minutes_label_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/required_ingredients_recycler_view" />
+
+    <TextView
+        android:id="@+id/ready_in_minutes_label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/servings_label_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/servings"
         app:layout_constraintTop_toBottomOf="@+id/required_ingredients_recycler_view" />
 
     <TextView
@@ -76,9 +89,21 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:text="@string/ready_in_minutes_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/ready_in_minutes_label"
+        app:layout_constraintTop_toBottomOf="@+id/required_ingredients_recycler_view" />
+
+    <TextView
+        android:id="@+id/servings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/servings_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/required_ingredients_recycler_view" />
 
     <Button

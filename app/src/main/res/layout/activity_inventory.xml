@@ -10,7 +10,7 @@
         android:id="@+id/inventory_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="16dp"
         android:text="@string/Inventory_title_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textStyle="bold"
@@ -18,15 +18,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/inventory_ingredients_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/inventory_ingredients_label_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inventory_title" />
+
+    <TextView
+        android:id="@+id/inventory_food_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/inventory_food_label_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inventory_ingredients_recycler_view" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/inventory_recycler_view"
+        android:id="@+id/inventory_ingredients_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="500dp"
+        android:layout_height="250dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inventory_title"
+        app:layout_constraintTop_toBottomOf="@+id/inventory_ingredients_label"
+        tools:listitem="@layout/item" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/inventory_food_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inventory_food_label"
         tools:listitem="@layout/item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

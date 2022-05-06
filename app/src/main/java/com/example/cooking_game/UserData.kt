@@ -11,13 +11,19 @@ import java.security.Key
 data class UserData(
     val balance: Float? = null,
     val ingredientInventory: HashMap<String, IngredientData>? = null,
-    val foodInventory: HashMap<String,Int>? = null,
+    val foodInventory: HashMap<String, FoodData>? = null,
 )
 
 data class IngredientData(
-    val quantity: Int? = null,
+    var quantity: Int? = null,
+    var price: Float? = null,
     val name: String? = null,
     val image: String? = null
 )
 
-
+data class FoodData(
+    var quantity: Int? = null,
+    var price: Float? = null,
+    val name: String? = null,
+    val image: String? = null
+)

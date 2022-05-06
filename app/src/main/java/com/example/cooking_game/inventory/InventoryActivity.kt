@@ -21,12 +21,14 @@ class InventoryActivity : AppCompatActivity() {
 
 
     private var ingredientList = ArrayList<Ingredient>()
-    private var adapter: MyInventoryRecyclerAdapter? = null
+    private var foodList = ArrayList<Recipe>()
+    private var adapterIngredients: MyInventoryIngredientsRecyclerAdapter? = null
+    private var adapterFood: MyInventoryFoodRecyclerAdapter? = null
 
     private lateinit var fireBaseDb: FirebaseFirestore
     lateinit private var userID: String
     lateinit private var retrofit: Retrofit
-    lateinit private var  spoonacularAPI: SpoonacularService
+    lateinit private var spoonacularAPI: SpoonacularService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +43,13 @@ class InventoryActivity : AppCompatActivity() {
             userID = currentUser.uid.toString()
         }
 
-        adapter = MyInventoryRecyclerAdapter(ingredientList)
+        adapterIngredients = MyInventoryIngredientsRecyclerAdapter(ingredientList)
+        adapterFood = MyInventoryFoodRecyclerAdapter(foodList)
 
-        inventory_recycler_view.adapter = adapter
-        inventory_recycler_view.layoutManager = GridLayoutManager(this, 3)
+        inventory_ingredients_recycler_view.adapter = adapterIngredients
+        inventory_ingredients_recycler_view.layoutManager = GridLayoutManager(this, 3)
+        inventory_food_recycler_view.adapter = adapterFood
+        inventory_food_recycler_view.layoutManager = GridLayoutManager(this, 3)
 
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -53,9 +58,10 @@ class InventoryActivity : AppCompatActivity() {
 
         spoonacularAPI = retrofit.create(SpoonacularService::class.java)
 
-        // clear list and replace with ingredients that user have
+        // clear list and replace with ingredients/food that user have
         ingredientList.clear()
-        getUserIngredientsFromFireStore()
+        foodList.clear()
+        getUserInventoryFromFireStore()
 
     }
     private fun startRegisterActivity() {
@@ -64,7 +70,7 @@ class InventoryActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun getUserIngredientsFromFireStore() {
+    private fun getUserInventoryFromFireStore() {
         fireBaseDb.collection("users").document(userID).get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
@@ -72,8 +78,9 @@ class InventoryActivity : AppCompatActivity() {
                     val userData = document.toObject<UserData>()
 
                     var ingredientInventory = userData?.ingredientInventory ?: HashMap<String, IngredientData>()
-                    var foodInventory = userData?.foodInventory ?: HashMap<String, Int>()
+                    var foodInventory = userData?.foodInventory ?: HashMap<String, FoodData>()
 
+                    // Ingredients
                     for ((ingredientID, ingredientData) in ingredientInventory) {
                         val ingredientElement = Ingredient(
                             ingredientID,
@@ -82,9 +89,20 @@ class InventoryActivity : AppCompatActivity() {
                         )
 
                         ingredientList.add(ingredientElement)
-                        adapter?.notifyDataSetChanged()
+                        adapterIngredients?.notifyDataSetChanged()
                     }
-                    // user does not exist
+                    // Food
+                    for ((foodID, foodData) in foodInventory) {
+                        val foodElement = Recipe(
+                            foodID,
+                            foodData.name ?: "",
+                            foodData.image ?: "",
+                        )
+
+                        foodList.add(foodElement)
+                        adapterFood?.notifyDataSetChanged()
+                    }
+                // user does not exist
                 } else {
                     Log.d(TAG, "user data: null")
                     startRegisterActivity()

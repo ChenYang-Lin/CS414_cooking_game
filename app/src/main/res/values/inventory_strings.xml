@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="Inventory_title_text">Inventory</string>
+    <string name="inventory_ingredients_label_text">Ingredients:</string>
+    <string name="inventory_food_label_text">Food:</string>
 </resources>

@@ -27,7 +27,7 @@ interface SpoonacularService {
         @Query("query") query: String
     ) : Call<RecipeResponse>
 
-    @GET("./recipes/{recipeID}/information/")
+    @GET("/recipes/{recipeID}/information/")
     fun getRecipeDetail(
         @Path("recipeID") recipeID: String,
         @Query("apiKey") apiKey: String,
