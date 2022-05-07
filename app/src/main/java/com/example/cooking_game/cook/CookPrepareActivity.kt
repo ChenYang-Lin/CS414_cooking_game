@@ -160,7 +160,7 @@ class CookPrepareActivity : AppCompatActivity() {
 
 
     fun startCooking(view: View) {
-        // check to see if user have all required ingredients for that meal
+        // check to see if user have all required ingredients for that meals
         if(!gotAllIngredients()) {
             // alert user missing ingredients
             val builder = AlertDialog.Builder(this)
