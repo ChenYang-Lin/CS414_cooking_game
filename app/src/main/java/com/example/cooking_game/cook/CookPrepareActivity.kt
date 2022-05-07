@@ -1,10 +1,12 @@
 package com.example.cooking_game.cook
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.cooking_game.*
@@ -161,6 +163,11 @@ class CookPrepareActivity : AppCompatActivity() {
         // check to see if user have all required ingredients for that meal
         if(!gotAllIngredients()) {
             // alert user missing ingredients
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Error")
+            builder.setMessage("You need to buy all the required ingredients before starting this recipe!")
+            val dialog = builder.create()
+            dialog.show()
             return;
         }
         // update firestore data, take off used ingredients and add meal
