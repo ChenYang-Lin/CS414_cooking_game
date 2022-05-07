@@ -1,5 +1,6 @@
 package com.example.cooking_game.shop
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -105,57 +106,67 @@ class ShopSellActivity : AppCompatActivity() {
 
     fun sell(view: View) {
         val fireBaseDb = FirebaseFirestore.getInstance()
-        fireBaseDb.collection("users").document(userID).get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    // users collection reference
-                    val users = fireBaseDb.collection("users")
 
-                    // get data for current user from firestore
-                    val userData = document.toObject<UserData>()
-                    // Log.d(TAG, "$userData")
-                    var balance = userData?.balance
-                    var ingredientInventory = userData?.ingredientInventory ?: HashMap<String, IngredientData>()
-                    var foodInventory = userData?.foodInventory ?: HashMap<String, FoodData>()
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Sell Dialog")
+        builder.setMessage("Are you sure that you want to sell this product?")
+        builder.setPositiveButton("YES"){ dialog, which ->
+            fireBaseDb.collection("users").document(userID).get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        // users collection reference
+                        val users = fireBaseDb.collection("users")
 
-                    // if there is no balance, something wrong, exit
-                    if (balance == null) {
-                        return@addOnSuccessListener
-                    }
+                        // get data for current user from firestore
+                        val userData = document.toObject<UserData>()
+                        // Log.d(TAG, "$userData")
+                        var balance = userData?.balance
+                        var ingredientInventory = userData?.ingredientInventory ?: HashMap<String, IngredientData>()
+                        var foodInventory = userData?.foodInventory ?: HashMap<String, FoodData>()
 
-                    var currentStock = stock - quantity
-                    if (type == "ingredient") {
-                        ingredientInventory[id]?.quantity = currentStock
-                        if (currentStock <= 0) {
-                            ingredientInventory.remove(id)
+                        // if there is no balance, something wrong, exit
+                        if (balance == null) {
+                            return@addOnSuccessListener
                         }
+
+                        var currentStock = stock - quantity
+                        if (type == "ingredient") {
+                            ingredientInventory[id]?.quantity = currentStock
+                            if (currentStock <= 0) {
+                                ingredientInventory.remove(id)
+                            }
+                        } else {
+                            foodInventory[id]?.quantity = currentStock
+                            if (currentStock <= 0) {
+                                foodInventory.remove(id)
+                            }
+                        }
+
+                        // update user date
+                        val user = UserData(
+                            balance + total,
+                            ingredientInventory,
+                            foodInventory,
+                        )
+                        users.document(userID).set(user)
+                        // user does not exist
                     } else {
-                        foodInventory[id]?.quantity = currentStock
-                        if (currentStock <= 0) {
-                            foodInventory.remove(id)
-                        }
+                        Log.d(TAG, "user data: null")
+                        startRegisterActivity()
                     }
-
-
-                    // update user date
-                    val user = UserData(
-                        balance + total,
-                        ingredientInventory,
-                        foodInventory,
-                    )
-                    users.document(userID).set(user)
-                    // user does not exist
-                } else {
-                    Log.d(TAG, "user data: null")
-                    startRegisterActivity()
                 }
-            }
-            .addOnCompleteListener{
-                finish()
-            }
-            .addOnFailureListener {
-                Log.d(TAG, "Error getting documents")
-            }
+                .addOnCompleteListener{
+                    finish()
+                }
+                .addOnFailureListener {
+                    Log.d(TAG, "Error getting documents")
+                }
+        }
+        builder.setNeutralButton("Cancel"){dialog, which ->
+            return@setNeutralButton
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 
     fun addOne(view: View) {
