@@ -28,7 +28,8 @@ class MainActivity : AppCompatActivity() {
     private val BASE_URL = "https://api.spoonacular.com/"
     // api keys from two accounts, just in case when free plan limitation reached
 //    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
-    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
+//    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
+    private val API_KEY = "4f8651a8632a4f77acadea5f58162507"
     private val TAG = "MainActivity"
 
 

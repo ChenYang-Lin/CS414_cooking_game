@@ -131,6 +131,7 @@ class ShopSellActivity : AppCompatActivity() {
                         }
 
                         var currentStock = stock - quantity
+                        Log.d(TAG, "$type")
                         if (type == "ingredient") {
                             ingredientInventory[id]?.quantity = currentStock
                             if (currentStock <= 0) {
