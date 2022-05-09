@@ -110,14 +110,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/cook_btn"
+    <GridLayout
+        android:id="@+id/stove_grid"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
+        android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:onClick="openCook"
-        android:text="Cook"
-        app:layout_constraintBottom_toTopOf="@+id/open_inventory_btn"
+        android:columnCount="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_image" />

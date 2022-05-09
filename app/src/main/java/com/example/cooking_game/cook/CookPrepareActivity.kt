@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.cooking_game.*
@@ -20,13 +19,16 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.example.cooking_game.MainActivity
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.math.ceil
 
 
 class CookPrepareActivity : AppCompatActivity() {
     private val BASE_URL = "https://api.spoonacular.com/"
-    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
-//    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
+//    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
+    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
     private val TAG = "CookPrepareActivity"
 
     private var ingredientInventory = HashMap<String, IngredientData>()
@@ -40,15 +42,23 @@ class CookPrepareActivity : AppCompatActivity() {
     lateinit private var recipeID: String
     lateinit private var userID: String
 
+
     private var quantity = 1
     private var price = 0.0f
     private var name = ""
     private var image = ""
+    private var readyInMinutes = 0
+    private var startedTime = Calendar.getInstance().apply { timeZone = TimeZone.getTimeZone("UTC") }
+    private var completeTime = Calendar.getInstance().apply { timeZone = TimeZone.getTimeZone("UTC") }
 
+    private var selectedStove: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cook_prepare)
+
+
+        selectedStove = intent.getIntExtra("selectedStove", 0)
 
         recipeID = intent.getStringExtra("id").toString() // id of selected ingredient from shop activity
 
@@ -89,8 +99,7 @@ class CookPrepareActivity : AppCompatActivity() {
                 image = body.image
                 quantity = body.servings
                 price = body.pricePerServing
-//                readyInMinutes = body.readyInMinutes
-//                extendedIngredients = body.extendedIngredients as ArrayList<ExtendedIngredients>
+                readyInMinutes = body.readyInMinutes
 
                 // update adapter
                 requiredIngredientsList.addAll(body.extendedIngredients)
@@ -170,6 +179,11 @@ class CookPrepareActivity : AppCompatActivity() {
             dialog.show()
             return;
         }
+        // calculated current time and complete time
+        startedTime = Calendar.getInstance().apply { timeZone = TimeZone.getTimeZone("UTC") }
+        completeTime = Calendar.getInstance().apply { timeZone = TimeZone.getTimeZone("UTC") }
+        completeTime.add(Calendar.SECOND, readyInMinutes)
+
         // update firestore data, take off used ingredients and add meal
         fireBaseDb.collection("users").document(userID).get()
             .addOnSuccessListener { document ->
@@ -181,6 +195,7 @@ class CookPrepareActivity : AppCompatActivity() {
                     var balance = userData?.balance
                     var newIngredientInventory = userData?.ingredientInventory ?: HashMap<String, IngredientData>()
                     var newFoodInventory = userData?.foodInventory ?: HashMap<String, FoodData>()
+                    var stoves = userData?.stoves
 
                     // update ingredients
                     for (currentIngredient in requiredIngredientsList) {
@@ -193,20 +208,23 @@ class CookPrepareActivity : AppCompatActivity() {
                         }
                     }
 
-                    // update meal
-                    val hold = newFoodInventory[recipeID]?.quantity ?: 0
-                    newFoodInventory[recipeID] = FoodData(
-                        quantity + hold,
-                        price,
-                        name,
-                        image,
-                    )
+                    // update stove
+                    stoves?.get(selectedStove)?.status = "cooking"
+                    stoves?.get(selectedStove)?.id = recipeID
+                    stoves?.get(selectedStove)?.startedTime = startedTime.timeInMillis
+                    stoves?.get(selectedStove)?.completeTime = completeTime.timeInMillis
+                    stoves?.get(selectedStove)?.quantity = quantity
+                    stoves?.get(selectedStove)?.price = price
+                    stoves?.get(selectedStove)?.name = name
+                    stoves?.get(selectedStove)?.image = image
+
 
                     // update user date
                     val user = UserData(
                         balance,
                         newIngredientInventory,
                         newFoodInventory,
+                        stoves
                     )
                     users.document(userID).set(user)
                     // user does not exist

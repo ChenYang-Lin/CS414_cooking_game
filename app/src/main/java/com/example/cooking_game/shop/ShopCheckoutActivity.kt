@@ -20,8 +20,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ShopCheckoutActivity : AppCompatActivity() {
     private val BASE_URL = "https://api.spoonacular.com/"
-    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
-//    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
+//    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
+    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
     private val TAG = "ShopCheckoutActivity"
 
     private lateinit var fireBaseDb: FirebaseFirestore
@@ -116,6 +116,7 @@ class ShopCheckoutActivity : AppCompatActivity() {
                         var balance = userData?.balance
                         var ingredientInventory = userData?.ingredientInventory ?: HashMap<String, IngredientData>()
                         var foodInventory = userData?.foodInventory ?: HashMap<String, FoodData>()
+                        var stoves = userData?.stoves
 
                         // if there is no balance, something wrong, exit
                         if (balance == null) {
@@ -137,6 +138,7 @@ class ShopCheckoutActivity : AppCompatActivity() {
                                 balance - total,
                                 ingredientInventory,
                                 foodInventory,
+                                stoves
                             )
                             users.document(userID).set(user)
                         }

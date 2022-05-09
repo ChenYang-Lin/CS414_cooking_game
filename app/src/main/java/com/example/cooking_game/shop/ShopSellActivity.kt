@@ -123,6 +123,7 @@ class ShopSellActivity : AppCompatActivity() {
                         var balance = userData?.balance
                         var ingredientInventory = userData?.ingredientInventory ?: HashMap<String, IngredientData>()
                         var foodInventory = userData?.foodInventory ?: HashMap<String, FoodData>()
+                        var stoves = userData?.stoves
 
                         // if there is no balance, something wrong, exit
                         if (balance == null) {
@@ -147,6 +148,7 @@ class ShopSellActivity : AppCompatActivity() {
                             balance + total,
                             ingredientInventory,
                             foodInventory,
+                            stoves,
                         )
                         users.document(userID).set(user)
                         // user does not exist

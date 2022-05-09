@@ -14,11 +14,15 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import android.content.Intent
+
+
+
 
 class CookActivity : AppCompatActivity() {
     private val BASE_URL = "https://api.spoonacular.com/"
-    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
-//    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
+//    private val API_KEY = "d527da482f5f48be8629764a068e3ae1"
+    private val API_KEY = "00dff5c2b2574ed1bb71971332ce5f3a"
     private val TAG = "CookActivity"
 
     private var recipeList = ArrayList<Recipe>()
@@ -26,11 +30,16 @@ class CookActivity : AppCompatActivity() {
     lateinit private var retrofit: Retrofit
     lateinit private var  spoonacularAPI: SpoonacularService
 
+    private var selectedStove: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cook)
 
-        adapter = MyRecipeRecyclerAdapter(recipeList)
+
+        selectedStove = intent.getIntExtra("selectedStove", 0)
+
+        adapter = MyRecipeRecyclerAdapter(recipeList, selectedStove)
 
         cook_recycler_view.adapter = adapter
         cook_recycler_view.layoutManager = GridLayoutManager(this, 3)

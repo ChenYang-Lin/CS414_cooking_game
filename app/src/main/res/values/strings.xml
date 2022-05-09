@@ -14,4 +14,5 @@
     <string name="profile_icon_description">profile_icon</string>
     <string name="open_inventory_btn_text">Inventory</string>
     <string name="open_shop_btn_text">Shop</string>
+    <string name="stove_icon_description">stove_icon_description</string>
 </resources>

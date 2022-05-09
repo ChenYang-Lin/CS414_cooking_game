@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cooking_game.R
 import com.example.cooking_game.Recipe
+import kotlinx.android.synthetic.main.activity_cook.view.*
 import kotlinx.android.synthetic.main.item.view.*
 
-class MyRecipeRecyclerAdapter(private val recipes: ArrayList<Recipe>): RecyclerView.Adapter<MyRecipeRecyclerAdapter.MyViewHolder>() {
-    class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class MyRecipeRecyclerAdapter(private val recipes: ArrayList<Recipe>, private val selectedStove: Int): RecyclerView.Adapter<MyRecipeRecyclerAdapter.MyViewHolder>() {
+    inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val id = itemView.findViewById<TextView>(R.id.item_id)
         val name = itemView.findViewById<TextView>(R.id.item_name)
         val img = itemView.findViewById<ImageView>(R.id.item_img)
@@ -26,6 +27,7 @@ class MyRecipeRecyclerAdapter(private val recipes: ArrayList<Recipe>): RecyclerV
 
                 val intent = Intent(itemView.context, CookPrepareActivity::class.java)
                 intent.putExtra("id", itemView.item_id.text.toString()) // send id of current ingredient to checkout activity
+                intent.putExtra("selectedStove", selectedStove)
                 itemView.context.startActivity(intent)
             }
 
